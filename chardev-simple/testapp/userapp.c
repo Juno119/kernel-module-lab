@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 		printf ("file %s either does not exist or has been locked by another process\n",DEVICE);
 	}
 
-	printf ("r = read from device\n w= write to device\n enter command: ");
+	printf ("r = read from device\nw= write to device\nenter command: ");
 
 	scanf("%c", &ch);
 	switch (ch) {
