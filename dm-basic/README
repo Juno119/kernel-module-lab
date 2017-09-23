@@ -1,0 +1,40 @@
+basic target
+---
+
+Based on http://techgmm.blogspot.jp/p/writing-your-own-device-mapper-target.html
+
+## install
+
+~~~
+# yum -y install kernel-devel
+# make
+# insmod basic_target.ko
+~~~
+
+## setup
+
+### 1. create 2GB temp file
+
+~~~
+# dd if=/dev/zero of=/tmp/disk1 bs=512 count=20000
+~~~
+
+### 2. attach loop device to the file
+
+~~~
+# losetup /dev/loop6 /tmp/disk1
+~~~
+
+### 3. create device with `basic_target`
+
+~~~
+# echo 0 20000 basic_target /dev/loop6 0|dmsetup create my_basic_target_device
+~~~
+
+## experiments
+
+write request sector 10 and size 512 bytes.
+
+~~~
+# dd if=/dev/zero of=/dev/mapper/my_basic_target_device bs=512 seek=10 count=1
+~~~
